@@ -1,17 +1,16 @@
 package main
 
 import (
-	"net/http"
 	"fmt"
-	"myapp/pkg/handlers"
-	"myapp/pkg/config"
-	"myapp/pkg/render"
 	"log"
+	"myapp/pkg/config"
+	"myapp/pkg/handlers"
+	"myapp/pkg/render"
+	"net/http"
 	//"errors"
 )
 
 const portNum = ":8080"
-
 
 func main() {
 
@@ -29,7 +28,6 @@ func main() {
 	handlers.NewHandlers(repo)
 
 	render.NewTemplates(&app)
-
 
 	http.HandleFunc("/", handlers.Repo.Home)
 	http.HandleFunc("/about", handlers.Repo.About)
