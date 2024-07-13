@@ -7,7 +7,6 @@ import (
 	"myapp/pkg/handlers"
 	"myapp/pkg/render"
 	"net/http"
-	//"errors"
 )
 
 const portNum = ":8080"
@@ -29,10 +28,14 @@ func main() {
 
 	render.NewTemplates(&app)
 
-	http.HandleFunc("/", handlers.Repo.Home)
-	http.HandleFunc("/about", handlers.Repo.About)
-
 	fmt.Println(fmt.Sprintf("Starting application on port %s", portNum))
-	_ = http.ListenAndServe(portNum, nil)
+
+	srv := &http.Server{
+		Addr:    portNum,
+		Handler: routes(&app),
+	}
+
+	err = srv.ListenAndServe()
+	log.Fatal(err)
 
 }
