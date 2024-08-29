@@ -7,6 +7,9 @@ import (
 	"myapp/pkg/handlers"
 	"myapp/pkg/render"
 	"net/http"
+	"time"
+
+	"github.com/alexedwards/scs/v2"
 )
 
 const portNum = ":8080"
@@ -14,6 +17,13 @@ const portNum = ":8080"
 func main() {
 
 	var app config.AppConfig
+
+	session := scs.New()
+	session.Lifetime = 24 * time.Hour
+	session.Cookie.Persist = true
+	session.Cookie.SameSite = http.SameSiteLaxMode
+	// in production, you want this to be true to force https
+	session.Cookie.Secure = false
 
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
