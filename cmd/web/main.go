@@ -14,16 +14,22 @@ import (
 
 const portNum = ":8080"
 
+var app config.AppConfig
+var session *scs.SessionManager
+
 func main() {
 
-	var app config.AppConfig
+	//when in production change to true
+	app.InProduction = false
 
-	session := scs.New()
+	session = scs.New()
 	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
 	session.Cookie.SameSite = http.SameSiteLaxMode
 	// in production, you want this to be true to force https
-	session.Cookie.Secure = false
+	session.Cookie.Secure = app.InProduction
+
+	app.Session = session
 
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
