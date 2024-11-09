@@ -1,3 +1,3 @@
 # README #
 
-Beginnings of a go backend
+Beginnings of a go backend web app
